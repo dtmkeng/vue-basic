@@ -32,7 +32,7 @@
 <script>
 import VoteConfirm from './voteConfirm'
 export default {
-    name: 'InsertName',
+    name: 'VoteSetect',
     components :{
         VoteConfirm
     },

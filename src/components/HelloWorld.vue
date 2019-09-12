@@ -1,6 +1,6 @@
 <template>
   <div class="inder-vote">
-      <InsertName 
+      <VoteSetect 
         title="Enter name vote"
         button_name="Confirm"
     />
@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import InsertName from './InsertName.vue'
+import VoteSetect from './voteSetect.vue'
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
   },
   components:{
-    InsertName
+    VoteSetect
   }
 }
 </script>
