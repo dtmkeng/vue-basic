@@ -1,44 +1,41 @@
 <template>
-    <div>
+    <div class="vote-detail">
          {{title}}
-        <input v-model="username">
-        <!-- <p>{{username}}</p> -->
-        <!-- <ul>
-            <li v-for="(todo,index) in todos" v-bind:key="index"  style="list-style-type:none;">
-                {{ todo }}
-            </li>
-       </ul> -->
-       <div class="orderlist-s">
-            <div v-for="(order,index) in orderlist" v-bind:key="index">
-                       <input type="checkbox" v-model="orderselete" :value="order"/> {{order}}
+        <input v-model="votename" @focus="cleartext">
+        <div class="votelist-s">
+            <div v-for="(vote,index) in votelist" v-bind:key="index">
+                       <input type="checkbox" v-model="voteselete" :value="vote"/> {{vote}}
             </div>
-            <!-- <span>{{orderselete}}</span> -->
         </div>
         <br/>
-        <div>You Order Select</div>
-        <!-- <span>{{orderselete}}</span> -->
+        <p>
+            Select vote Type
+             <select v-model="votetype">
+                <option disabled value="">Please select one</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+            </select>
+        </p>
        
+        <!-- <span>Selected: {{ selected }}</span> -->
+        <!-- <div>You vote Select</div> -->
 
-        <div>
-            <!-- <div>Order your confirm</div> -->
-            <table>
-                <tr>
-                    <th>No. Order</th>
-                    <th>Name Order</th>
-                </tr>
-                <tr v-for="(order,index) in orderselete" :key="index">
-                    <td>{{index+1}}</td>
-                    <td>{{order}}</td>
-                </tr>
-            </table>
-        </div>
+         <VoteConfirm v-if="isConfirme" 
+                    :voteselete="voteconfirm"
+                    :vote_name="votename"
+                    :vote_type="votetype"
+        />
          <p><button v-on:click="handlerClick">{{button_name}}</button></p>
     </div>
 </template>
 <script>
-import { all } from 'q';
+import VoteConfirm from './voteConfirm'
 export default {
     name: 'InsertName',
+    components :{
+        VoteConfirm
+    },
     props:{
         button_name: { // default props value 
             button_name: String,
@@ -51,34 +48,42 @@ export default {
     },
     data: () => {
         return {
-            username:'Untitled',
-            todos: ['test1'],
-            orderlist:['order-1','order-2','order-3','order-4','order-5'],
-            orderselete:[],
-            order:[]
+            votename:'Untitled',
+            votelist:['vote-1','vote-2','vote-3','vote-4','vote-5'], //vote checkboxs
+            voteselete:[],
+            voteconfirm:[],
+            isConfirme: false,
+            votetype: ''
         }
     },
     methods: {
         handlerClick : function() {
-           if (this.username == '' || this.username == 'Untitled') {
+           if (this.votename == '' || this.votename == 'Untitled') {
 
                alert('Null data input or Untitled')
 
            }else {
-                // this.todos.push(this.username)
-                console.log(this.username)
-                this.username = '' // clear data in input 
-                this.orderselete=[]
-                alert('saved order ')
+                // this.todos.push(this.votename)
+                // console.log(this.votename)
+                this.isConfirme = true
+                this.voteconfirm = []
+                this.voteconfirm = this.voteselete
+                // this.votename = '' // clear data in input 
+                // this.voteselete=[]
+                // alert('saved vote ')
 
            }
 
+        },
+        cleartext : function(){
+            this.votename = ''
+            this.isConfirme = false
         }
     },
 }
 </script>
 <style>
-.orderlist-s{
+.votelist-s{
     margin-top: 2%;
 }
 </style>

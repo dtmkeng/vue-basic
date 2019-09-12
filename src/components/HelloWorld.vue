@@ -1,8 +1,11 @@
 <template>
-  <InsertName 
-      title="Enter name order"
-      button_name="Confirm"
+  <div class="inder-vote">
+      <InsertName 
+        title="Enter name vote"
+        button_name="Confirm"
     />
+  </div>
+
 </template>
 
 <script>
@@ -20,6 +23,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.inder-vote {
+  /* text-align: center; */
+  margin-left: 5%;
+  margin-top: 5%;
+}
 h3 {
   margin: 40px 0 0;
 }
