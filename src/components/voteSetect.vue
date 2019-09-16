@@ -4,17 +4,15 @@
         <input v-model="votename" @focus="cleartext">
         <div class="votelist-s">
             <div v-for="(vote,index) in votelist" v-bind:key="index">
-                       <input type="checkbox" v-model="voteselete" :value="vote"/> {{vote}}
+                       <input type="checkbox" v-model="voteselete" :value="vote"/> {{vote.name}}
             </div>
         </div>
         <br/>
         <p>
             Select vote Type
-             <select v-model="votetype">
+             <select v-model="votetype"  >
                 <option disabled value="">Please select one</option>
-                <option>A</option>
-                <option>B</option>
-                <option>C</option>
+                <option v-for="(votetypes,index) in votetypelsit" :key="index" :value="votetypes">{{votetypes.name}}</option>
             </select>
         </p>
        
@@ -31,6 +29,7 @@
 </template>
 <script>
 import VoteConfirm from './voteConfirm'
+import http from '../../http'
 export default {
     name: 'VoteSetect',
     components :{
@@ -53,7 +52,8 @@ export default {
             voteselete:[],
             voteconfirm:[],
             isConfirme: false,
-            votetype: ''
+            votetype: '',
+            votetypelsit:[]
         }
     },
     methods: {
@@ -68,6 +68,10 @@ export default {
                 this.isConfirme = true
                 this.voteconfirm = []
                 this.voteconfirm = this.voteselete
+                // console.log(`${this.votename,this.voteselete,this.votetype}`)
+                console.log('votename',this.votename)
+                console.log('voteselete',this.voteselete)
+                   console.log('votetype',this.votetype)
                 // this.votename = '' // clear data in input 
                 // this.voteselete=[]
                 // alert('saved vote ')
@@ -80,6 +84,20 @@ export default {
             this.isConfirme = false
         }
     },
+    mounted() {
+      http.get('/competitor').then(res => {
+        // this.d.a = res.data.a;
+        this.votelist = res.data
+        // console.log(res.data);
+      }).catch(console.error);
+      http.get('/votetype').then(res => {
+        // this.d.a = res.data.a;
+        this.votetypelsit = res.data
+        console.log(res.data);
+      }).catch(console.error);
+
+     
+    }
 }
 </script>
 <style>

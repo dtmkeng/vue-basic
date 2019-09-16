@@ -10,6 +10,8 @@
 
 <script>
 import VoteSetect from './voteSetect.vue'
+import http from '../../http'
+
 export default {
   name: 'HelloWorld',
   props: {
@@ -17,7 +19,35 @@ export default {
   },
   components:{
     VoteSetect
-  }
+  },
+  mounted() {
+    console.log('hello')
+    
+  },
+  data(){
+    return {
+      d: {
+        a: 0
+      },
+      submitted: false
+    }
+  },
+  methods: {
+    testPost() {
+      var data = {
+        a: this.d.a
+      };
+
+      http.get('/people').then(res => {
+        // this.d.a = res.data.a;
+        console.log(res);
+      }).catch(e => {
+        console.log(e); 
+      });
+
+      // this.submitted = true;
+    }
+  },
 }
 </script>
 

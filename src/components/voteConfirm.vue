@@ -2,7 +2,7 @@
    <div id='vote-confirm'>
             <!-- <div>vote your confirm</div> -->
             <div><b>Vote Name:</b>{{vote_name}}</div>
-            <div><b>Type Vote:</b>{{vote_type}}</div>
+            <div><b>Type Vote:</b>{{vote_type.name}}</div>
             <br/>
             <table>
                 <tr>
@@ -10,8 +10,8 @@
                     <th>Name Vote</th>
                 </tr>
                 <tr v-for="(vote,index) in voteselete" :key="index">
-                    <td>{{index+1}}</td>
-                    <td>{{vote}}</td>
+                    <td>{{vote.id}}</td>
+                    <td>{{vote.name}}</td>
                 </tr>
             </table>
     </div>
@@ -22,7 +22,7 @@ export default {
     props:{
         voteselete : Array,
         vote_name: String,
-        vote_type: String
+        vote_type: ''
     }
 }
 </script>
@@ -30,7 +30,7 @@ export default {
 table {
   font-family: arial, sans-serif;
   bvote-collapse: collapse;
-  width: 20%;
+  width: 50%;
 }
 
 td, th {
