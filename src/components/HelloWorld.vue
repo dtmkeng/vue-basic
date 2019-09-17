@@ -1,7 +1,7 @@
 <template>
   <div class="inder-vote">
       <VoteSetect 
-        title="Enter name vote"
+        title="Enter People ID"
         button_name="Confirm"
     />
   </div>
@@ -10,7 +10,6 @@
 
 <script>
 import VoteSetect from './voteSetect.vue'
-import http from '../../http'
 
 export default {
   name: 'HelloWorld',
@@ -19,35 +18,7 @@ export default {
   },
   components:{
     VoteSetect
-  },
-  mounted() {
-    console.log('hello')
-    
-  },
-  data(){
-    return {
-      d: {
-        a: 0
-      },
-      submitted: false
-    }
-  },
-  methods: {
-    testPost() {
-      var data = {
-        a: this.d.a
-      };
-
-      http.get('/people').then(res => {
-        // this.d.a = res.data.a;
-        console.log(res);
-      }).catch(e => {
-        console.log(e); 
-      });
-
-      // this.submitted = true;
-    }
-  },
+  }
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="vote-detail">
          {{title}}
-        <input v-model="votename" @focus="cleartext">
+        <input v-model="votename" @focus="cleartext" type="number">
         <div class="votelist-s">
             <div v-for="(vote,index) in votelist" v-bind:key="index">
                        <input type="checkbox" v-model="voteselete" :value="vote"/> {{vote.name}}
@@ -11,7 +11,7 @@
         <p>
             Select vote Type
              <select v-model="votetype"  >
-                <option disabled value="">Please select one</option>
+                <option disabled value="">Vote Type</option>
                 <option v-for="(votetypes,index) in votetypelsit" :key="index" :value="votetypes">{{votetypes.name}}</option>
             </select>
         </p>
@@ -30,35 +30,37 @@
 <script>
 import VoteConfirm from './voteConfirm'
 import http from '../../http'
+ /* eslint-disable */ 
 export default {
     name: 'VoteSetect',
-    components :{
+    components :{ // define for use any component
         VoteConfirm
     },
     props:{
         button_name: { // default props value 
             button_name: String,
-            default: 'Untitled'
+            // default: 'Untitled'
         },
         title: { // default props value 
             title : String,
-            default : 'Untitled'
+            // default : 'Untitled'
         }
     },
     data: () => {
         return {
-            votename:'Untitled',
+            votename:'',
             votelist:['vote-1','vote-2','vote-3','vote-4','vote-5'], //vote checkboxs
             voteselete:[],
             voteconfirm:[],
             isConfirme: false,
             votetype: '',
-            votetypelsit:[]
+            votetypelsit:[],
+            competitor:[]
         }
     },
     methods: {
         handlerClick : function() {
-           if (this.votename == '' || this.votename == 'Untitled') {
+           if (this.votename == '') {
 
                alert('Null data input or Untitled')
 
@@ -69,9 +71,26 @@ export default {
                 this.voteconfirm = []
                 this.voteconfirm = this.voteselete
                 // console.log(`${this.votename,this.voteselete,this.votetype}`)
-                console.log('votename',this.votename)
-                console.log('voteselete',this.voteselete)
-                   console.log('votetype',this.votetype)
+                // eslint-disable-next-line no-console
+                // console.log('votename',this.votename)
+                // console.log('voteselete',this.voteselete)
+                for(let i=0;i<this.voteselete.length;i++) {
+                    // console.log(this.voteselete[i].name)
+                    this.competitor.push(this.voteselete[i].id)
+                }
+                // console.log('votetype',this.votetype.id)
+                  http.post("/voted",
+                            {
+                            "prepleid":this.votename,
+                            "competitor":this.competitor,
+                            "votetype":this.votetype.id
+                            }
+                  ).then(res=>{
+                        alert('saved vote')
+                  }).catch(error=>{
+                      console.error(error);
+                      
+                  })
                 // this.votename = '' // clear data in input 
                 // this.voteselete=[]
                 // alert('saved vote ')
@@ -84,18 +103,22 @@ export default {
             this.isConfirme = false
         }
     },
-    mounted() {
+    
+    mounted() { // active after dom mount
       http.get('/competitor').then(res => {
         // this.d.a = res.data.a;
         this.votelist = res.data
         // console.log(res.data);
-      }).catch(console.error);
+        /* eslint-disable */ 
+      }).catch(err=>{console.error(err)});
+
       http.get('/votetype').then(res => {
         // this.d.a = res.data.a;
         this.votetypelsit = res.data
-        console.log(res.data);
-      }).catch(console.error);
-
+      }).catch(err=>{
+          // eslint-disable-next-line no-console
+          console.error(err)
+      });
      
     }
 }

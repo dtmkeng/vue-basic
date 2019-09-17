@@ -1,7 +1,7 @@
 <template>
    <div id='vote-confirm'>
             <!-- <div>vote your confirm</div> -->
-            <div><b>Vote Name:</b>{{vote_name}}</div>
+            <div><b>People ID:</b>{{vote_name}}</div>
             <div><b>Type Vote:</b>{{vote_type.name}}</div>
             <br/>
             <table>
@@ -17,6 +17,7 @@
     </div>
 </template>
 <script>
+ /* eslint-disable */ 
 export default {
     name: 'VoteConfirm',
     props:{
@@ -29,20 +30,17 @@ export default {
 <style scope>
 table {
   font-family: arial, sans-serif;
-  bvote-collapse: collapse;
+  border-collapse: collapse;
   width: 50%;
 }
 
 td, th {
-  bvote: 1px solid #dddddd;
+  border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
 
 tr:nth-child(even) {
   background-color: #dddddd;
-}
-#vote-confirm {
-    /* margin-left: 5%; */
 }
 </style>
